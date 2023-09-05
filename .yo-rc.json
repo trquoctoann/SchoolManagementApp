@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "vn.st.schoolmanagement",
+      "nativeLanguage": "vi"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "monolith",
+    "baseName": "SchoolManagement",
+    "packageName": "vn.st.schoolmanagement",
+    "packageFolder": "vn/st/schoolmanagement",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "N2FhNGUyY2FjNDBmODRmYzY1YzE4ZDYzY2IwNzkzYTU4MjljMzc4ZDFmYzRiMDkwOTNlNzU5NWU2N2E0NTVhZTA2NTRjYTg3OWJiNmE5NjM1MTc4OGIwNWY4NDliMTk3OTlmNjYxZWM4YzI5ZTdkYmVmZTY2NWU1Y2FlZWQ5YTQ=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "skipClient": true,
+    "creationTimestamp": 1619929947930,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "vi",
+    "languages": ["vi", "en"],
+    "blueprints": []
+  }
+}

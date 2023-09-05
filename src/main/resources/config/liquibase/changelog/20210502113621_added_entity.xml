@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+        <property name="autoIncrement" value="true"/>
+
+    <changeSet id="20210502113621-1" author="jhipster">
+
+        <createTable tableName = "schools">
+            <column name="id" type = "bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="phone_number" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="classrooms">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="school_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="students">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="integer"/>
+            <column name="gender" type="varchar(3)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="classroom_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="subject">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="mark">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="student_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="oral_test" type="double"/>
+            <column name="fifteen_minutes_test" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="one_Period_test" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="final_exam" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="average_mark" type="double"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="20210502113621-2" author="jhipster">
+
+        <addForeignKeyConstraint baseTableName="classrooms" 
+                                 baseColumnNames="school_id"
+                                 referencedTableName="schools" 
+                                 referencedColumnNames="id"
+                                 constraintName="fk_classrooms_schools"/>
+        
+        <addForeignKeyConstraint baseTableName="students" 
+                                 baseColumnNames="classroom_id"
+                                 referencedTableName="classrooms" 
+                                 referencedColumnNames="id"
+                                 constraintName="fk_students_classrooms"/>
+
+        <addForeignKeyConstraint baseTableName="mark" 
+                                 baseColumnNames="student_id"
+                                 referencedTableName="students" 
+                                 referencedColumnNames="id"
+                                 constraintName="fk_mark_student"/>
+
+        <addForeignKeyConstraint baseTableName="mark" 
+                                 baseColumnNames="subject_id"
+                                 referencedTableName="subject" 
+                                 referencedColumnNames="id"
+                                 constraintName="fk_mark_subject"/>
+
+        <addUniqueConstraint tableName="mark" 
+                             columnNames="student_id,subject_id" 
+                             constraintName="uk_student_subject"/>
+                                 
+    </changeSet>
+
+    <changeSet id="20210502113621-3" author="jhipster" context="faker">
+
+        <loadData
+                  file="config/liquibase/fake-data/schools.csv"
+                  separator=","
+                  tableName="schools">
+            <column name="id" type="numeric"/>
+            <column name="name" type="string"/>
+            <column name="address" type="string"/>
+            <column name="phone_number" type="string"/>
+            <column name="created_by" type="string"/>
+        </loadData>
+
+        <loadData
+                  file="config/liquibase/fake-data/classrooms.csv"
+                  separator=","
+                  tableName="classrooms">
+            <column name="id" type="numeric"/>
+            <column name="name" type="string"/>
+            <column name="school_id" type="numeric"/>
+            <column name="created_by" type="string"/>
+        </loadData>
+
+        <loadData
+                  file="config/liquibase/fake-data/students.csv"
+                  separator=","
+                  tableName="students">
+            <column name="id" type="numeric"/>
+            <column name="first_name" type="string"/>
+            <column name="last_name" type="string"/>
+            <column name="age" type="numeric"/>
+            <column name="gender" type="string"/>
+            <column name="email" type="string"/>
+            <column name="classroom_id" type="numeric"/>
+            <column name="created_by" type="string"/>
+        </loadData>
+
+        <loadData
+                  file="config/liquibase/fake-data/subject.csv"
+                  separator=","
+                  tableName="subject">
+            <column name="id" type="numeric"/>
+            <column name="name" type="string"/>
+            <column name="created_by" type="string"/>
+        </loadData>
+
+        <loadData
+                  file="config/liquibase/fake-data/mark.csv"
+                  separator=","
+                  tableName="mark">
+            <column name="id" type="numeric"/>
+            <column name="student_id" type="numeric"/>
+            <column name="subject_id" type="numeric"/>
+            <column name="oral_test" type="numeric"/>
+            <column name="fifteen_minutes_test" type="numeric"/>
+            <column name="one_period_test" type="numeric"/>
+            <column name="final_exam" type="numeric"/>
+            <column name="average_mark" type="numeric"/>
+            <column name="created_by" type="string"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>
