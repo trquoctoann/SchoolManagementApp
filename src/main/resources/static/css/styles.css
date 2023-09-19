@@ -1,0 +1,36 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer components {
+  .navbar-items {
+    @apply block py-2 pl-3 pr-4 sm:p-0 active:bg-opacity-70 dark:active:bg-opacity-70 active:text-opacity-70 dark:active:text-opacity-70 rounded;
+  }
+  .navbar-other-items {
+    @apply navbar-items text-midnight hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-teal sm:dark:hover:text-teal sm:dark:hover:bg-transparent;
+  }
+  .navbar-current-item {
+    @apply navbar-items text-white bg-teal hover:bg-opacity-90 sm:bg-transparent sm:text-teal sm:hover:text-opacity-50 sm:dark:text-teal sm:dark:hover:text-opacity-60;
+  }
+  .sidebar-items {
+    @apply flex items-center p-2 m-1 rounded-lg active:opacity-70;
+  }
+  .sidebar-other-items {
+    @apply sidebar-items text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600;
+  }
+  .sidebar-current-item {
+    @apply sidebar-items text-white bg-teal hover:bg-opacity-90;
+  }
+  .sidebar-logos {
+    @apply flex-shrink-0 w-5 h-5;
+  }
+  .sidebar-other-logos {
+    @apply sidebar-logos text-gray-500 dark:text-gray-400;
+  }
+  .sidebar-current-logos {
+    @apply sidebar-logos text-white;
+  }
+  .sidebar-text {
+    @apply flex-1 ml-3 whitespace-nowrap;
+  }
+}
