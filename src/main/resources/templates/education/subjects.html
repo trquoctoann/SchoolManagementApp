@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.thymeleaf.org"
+  th:lang="${#locale.language}"
+  lang="en"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../static/css/output.css" />
-    <link rel="icon" href="../../static/img/school_icon_header.svg" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{/css/output.css}" />
+    <link rel="icon" th:href="@{/img/school_icon_header.svg}" type="image/x-icon" />
     <script>
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
@@ -17,8 +23,8 @@
   <body class="font-nunito bg-white dark:bg-midnight">
     <nav class="bg-white dark:bg-midnight bg-opacity-80 dark:bg-opacity-80 fixed w-full z-20 top-0 left-0 right-0">
       <div class="max-w-screen-2xl flex items-center justify-between mx-auto p-4 border-b border-slate-400 dark:border-gray-600">
-        <a href="../index.html" class="flex items-center">
-          <img src="../../static/img/school_icon_header.svg" class="h-9 mr-3" alt="iSchool Logo" />
+        <a th:href="@{/}" class="flex items-center">
+          <img th:src="@{/img/school_icon_header.svg}" class="h-9 mr-3" alt="iSchool Logo" />
           <span class="text-midnight text-2xl font-extrabold dark:text-white">iSchool</span>
         </a>
         <div class="flex">
@@ -28,10 +34,10 @@
           >
             <div class="relative h-7 w-7 items-center rounded-full bg-white transition dark:translate-x-5 duration-300 ease-in-out">
               <svg class="absolute p-1 dark:hidden w-full" viewBox="0 0 24 24" aria-labelledby="color-scheme-light">
-                <use xlink:href="../../static/img/mono_color_icon.svg#myLight"></use>
+                <use th:xlink:href="@{/img/mono_color_icon.svg#myLight}"></use>
               </svg>
               <svg class="absolute p-1 hidden dark:block w-full" viewBox="0 0 24 24" aria-labelledby="color-scheme-dark">
-                <use xlink:href="../../static/img/mono_color_icon.svg#myDark"></use>
+                <use th:xlink:href="@{/img/mono_color_icon.svg#myDark}"></use>
               </svg>
             </div>
           </button>
@@ -51,7 +57,7 @@
               class="font-semibold flex flex-col sm:flex-row p-4 sm:p-1 mt-4 sm:mt-0 border border-gray-400 dark:border-gray-700 sm:border-0 rounded-lg bg-gray-50 dark:bg-gray-800 sm:bg-transparent sm:dark:bg-transparent sm:space-x-8"
             >
               <li>
-                <a href="../index.html" class="navbar-other-items">Home</a>
+                <a th:href="@{/}" class="navbar-other-items">Home</a>
               </li>
               <li class="navbar-other-items relative">
                 <button id="dropdownAccountLink" data-dropdown-toggle="dropdownAccount" class="w-full flex justify-between">
@@ -72,55 +78,29 @@
                 >
                   <ul class="text-sm">
                     <li>
-                      <a href="../account/signIn.html" class="sidebar-other-items group">
+                      <a th:href="@{/login}" class="sidebar-other-items group">
                         <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                          class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 18 16"
                         >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#mySignIn" fill="none"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#mySignIn}" fill="none"></use>
                         </svg>
                         <span class="sidebar-text">Sign In</span>
                       </a>
                     </li>
                     <li>
-                      <a href="../account/signUp.html" class="sidebar-other-items group">
+                      <a th:href="@{/register}" class="sidebar-other-items group">
                         <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                          class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
                         >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#mySignUp" fill="currentColor"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#mySignUp}" fill="currentColor"></use>
                         </svg>
                         <span class="sidebar-text">Sign Up</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../account/updateInformation.html" class="sidebar-other-items group">
-                        <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 18"
-                        >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#myUpdateInfo" fill="currentColor"></use>
-                        </svg>
-                        <span class="sidebar-text">Update Infomation</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../account/changePassword.html" class="sidebar-other-items group">
-                        <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 18 18"
-                        >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#myChangePassword" fill="currentColor"></use>
-                        </svg>
-                        <span class="sidebar-text">Change Password</span>
                       </a>
                     </li>
                   </ul>
@@ -145,61 +125,61 @@
                 >
                   <ul class="text-sm">
                     <li>
-                      <a href="school.html" class="sidebar-other-items group">
+                      <a th:href="@{/schools}" class="sidebar-other-items group">
                         <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                          class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 32 32"
                         >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#mySchool" fill="currentColor"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#mySchool}" fill="currentColor"></use>
                         </svg>
                         <span class="sidebar-text">School</span>
                       </a>
                     </li>
                     <li>
-                      <a href="classroom.html" class="sidebar-other-items group">
+                      <a th:href="@{/classrooms}" class="sidebar-other-items group">
                         <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                          class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 489.38 489.38"
                         >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#myClassroom" fill="currentColor"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#myClassroom}" fill="currentColor"></use>
                         </svg>
                         <span class="sidebar-text">Classroom</span>
                       </a>
                     </li>
                     <li>
-                      <a href="subject.html" class="sidebar-current-item" aria-current="page">
+                      <a th:href="@{/subjects}" class="sidebar-current-item" aria-current="page">
                         <svg class="sidebar-current-logos" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                          <use xlink:href="../../static/img/mono_color_icon.svg#mySubject" fill="currentColor"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#mySubject}" fill="currentColor"></use>
                         </svg>
                         <span class="sidebar-text">Subject</span>
                       </a>
                     </li>
                     <li>
-                      <a href="student.html" class="sidebar-other-items group">
+                      <a th:href="@{/students}" class="sidebar-other-items group">
                         <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                          class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 512 512"
                         >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#myStudent" fill="currentColor"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#myStudent}" fill="currentColor"></use>
                         </svg>
                         <span class="sidebar-text">Student</span>
                       </a>
                     </li>
                     <li>
-                      <a href="mark.html" class="sidebar-other-items group">
+                      <a th:href="@{/mark}" class="sidebar-other-items group">
                         <svg
-                          class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                          class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 31.669 31.67"
                         >
-                          <use xlink:href="../../static/img/mono_color_icon.svg#myScore" fill="currentColor"></use>
+                          <use th:xlink:href="@{/img/mono_color_icon.svg#myScore}" fill="currentColor"></use>
                         </svg>
                         <span class="sidebar-text">Mark</span>
                       </a>
@@ -212,7 +192,7 @@
         </div>
       </div>
     </nav>
-    <div class="w-full mx-auto max-w-screen-2xl">
+    <div class="w-full mx-auto max-w-screen-2xl min-h-screen">
       <aside
         id="logo-sidebar"
         class="fixed top-0 left-auto w-56 h-screen mt-16 pt-4 transition-transform -translate-x-full bg-white border-r border-gray-400 lg:translate-x-0 dark:bg-midnight dark:border-gray-600"
@@ -221,61 +201,61 @@
         <div class="h-full px-3 pb-4 overflow-y-auto">
           <ul class="space-y-2 font-medium">
             <li>
-              <a href="school.html" class="sidebar-other-items group">
+              <a th:href="@{/schools}" class="sidebar-other-items group">
                 <svg
-                  class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 32 32"
                 >
-                  <use xlink:href="../../static/img/mono_color_icon.svg#mySchool" fill="currentColor"></use>
+                  <use th:xlink:href="@{/img/mono_color_icon.svg#mySchool}" fill="currentColor"></use>
                 </svg>
                 <span class="sidebar-text">School</span>
               </a>
             </li>
             <li>
-              <a href="classroom.html" class="sidebar-other-items group">
+              <a th:href="@{/classrooms}" class="sidebar-other-items group">
                 <svg
-                  class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 489.38 489.38"
                 >
-                  <use xlink:href="../../static/img/mono_color_icon.svg#myClassroom" fill="currentColor"></use>
+                  <use th:xlink:href="@{/img/mono_color_icon.svg#myClassroom}" fill="currentColor"></use>
                 </svg>
                 <span class="sidebar-text">Classroom</span>
               </a>
             </li>
             <li>
-              <a href="subject.html" class="sidebar-current-item" aria-current="page">
+              <a th:href="@{/subjects}" class="sidebar-current-item" aria-current="page">
                 <svg class="sidebar-current-logos" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                  <use xlink:href="../../static/img/mono_color_icon.svg#mySubject" fill="currentColor"></use>
+                  <use th:xlink:href="@{/img/mono_color_icon.svg#mySubject}" fill="currentColor"></use>
                 </svg>
                 <span class="sidebar-text">Subject</span>
               </a>
             </li>
             <li>
-              <a href="student.html" class="sidebar-other-items group">
+              <a th:href="@{/students}" class="sidebar-other-items group">
                 <svg
-                  class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                 >
-                  <use xlink:href="../../static/img/mono_color_icon.svg#myStudent" fill="currentColor"></use>
+                  <use th:xlink:href="@{/img/mono_color_icon.svg#myStudent}" fill="currentColor"></use>
                 </svg>
                 <span class="sidebar-text">Student</span>
               </a>
             </li>
             <li>
-              <a href="mark.html" class="sidebar-other-items group">
+              <a th:href="@{/mark}" class="sidebar-other-items group">
                 <svg
-                  class="sidebar-other-logos group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="sidebar-other-logos group-hover:text-midnight dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 31.669 31.67"
                 >
-                  <use xlink:href="../../static/img/mono_color_icon.svg#myScore" fill="currentColor"></use>
+                  <use th:xlink:href="@{/img/mono_color_icon.svg#myScore}" fill="currentColor"></use>
                 </svg>
                 <span class="sidebar-text">Mark</span>
               </a>
@@ -283,9 +263,62 @@
           </ul>
         </div>
       </aside>
+      <section class="lg:ml-56 mt-16 p-6">
+        <a
+          th:href="@{/subjects/addSubjectForm}"
+          class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-100 font-semibold rounded-lg text-sm px-5 py-3 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >Add Subject</a
+        >
+        <div class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-200">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-200">
+              <tr>
+                <th class="px-6 py-3">ID</th>
+                <th class="px-6 py-3">Name</th>
+                <th class="px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" th:each="subject : ${subjects}">
+                <td class="px-6 py-4" th:text="${subject.id}"></td>
+                <td class="px-6 py-4" th:text="${subject.name}"></td>
+                <td class="flex flex-col items-center justify-start lg:flex-row">
+                  <a
+                    title="Update"
+                    th:href="@{/subjects/showUpdateForm(subjectId=${subject.id})}"
+                    class="focus:outline-none bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-100 rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700"
+                  >
+                    <svg class="sidebar-current-logos" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 423.469 423.469">
+                      <use th:xlink:href="@{/img/mono_color_icon.svg#myUpdate}" fill="currentColor"></use>
+                    </svg>
+                  </a>
+                  <a
+                    title="Delete"
+                    th:href="@{/subjects/deleteSubject(subjectId=${subject.id})}"
+                    class="focus:outline-none bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-100 rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                  >
+                    <svg class="sidebar-current-logos" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <use th:xlink:href="@{/img/mono_color_icon.svg#myDelete}" fill="currentColor"></use>
+                    </svg>
+                  </a>
+                  <a
+                    title="Statistic"
+                    th:href="@{/subjects/statistic(subjectId=${subject.id})}"
+                    class="focus:outline-none bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-100 rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
+                  >
+                    <svg class="sidebar-current-logos" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <use th:xlink:href="@{/img/mono_color_icon.svg#myStatistic}" fill="currentColor"></use>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
 
-    <footer class="mt-24 mb-6">
+    <footer class="mb-6">
       <div class="flex flex-col space-y-3 border-t border-slate-400 pt-6 w-full max-w-screen-2xl mx-auto lg:pl-56">
         <p class="text-center text-sm font-bold dark:text-slate-500">
           <script>
@@ -299,7 +332,7 @@
         <div class="flex items-center justify-center space-x-5">
           <a href="https://www.facebook.com/trquoctoann/" target="_blank" class="items-center hover:opacity-80">
             <svg class="w-7 h-7 text-midnight dark:text-white" viewBox="0 0 24 24" aria-labelledby="facebook">
-              <use xlink:href="../../static/img/mono_color_icon.svg#myFacebook" fill="currentColor"></use>
+              <use th:xlink:href="@{/img/mono_color_icon.svg#myFacebook}" fill="currentColor"></use>
             </svg>
           </a>
           <a
@@ -308,17 +341,17 @@
             class="items-center hover:opacity-80"
           >
             <svg class="w-7 h-7 text-midnight dark:text-white" viewBox="0 0 24 24" aria-labelledby="linkedin">
-              <use xlink:href="../../static/img/mono_color_icon.svg#myLinkedin" fill="currentColor"></use>
+              <use th:xlink:href="@{/img/mono_color_icon.svg#myLinkedin}" fill="currentColor"></use>
             </svg>
           </a>
           <a href="https://github.com/trquoctoann" target="_blank" class="items-center hover:opacity-80">
             <svg class="w-7 h-7 text-midnight dark:text-white" viewBox="0 0 24 24" aria-labelledby="github">
-              <use xlink:href="../../static/img/mono_color_icon.svg#myGithub" fill="currentColor"></use>
+              <use th:xlink:href="@{/img/mono_color_icon.svg#myGithub}" fill="currentColor"></use>
             </svg>
           </a>
         </div>
       </div>
     </footer>
-    <script src="../../static/js/script.js"></script>
+    <script th:src="@{/js/script.js}" type="module"></script>
   </body>
 </html>

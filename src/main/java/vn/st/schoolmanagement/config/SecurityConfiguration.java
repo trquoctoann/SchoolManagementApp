@@ -1,8 +1,5 @@
 package vn.st.schoolmanagement.config;
 
-import vn.st.schoolmanagement.security.*;
-import vn.st.schoolmanagement.security.jwt.*;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -20,49 +17,44 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+import vn.st.schoolmanagement.security.*;
+import vn.st.schoolmanagement.security.jwt.*;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+  private final TokenProvider tokenProvider;
 
-    private final TokenProvider tokenProvider;
+  private final CorsFilter corsFilter;
+  private final SecurityProblemSupport problemSupport;
 
-    private final CorsFilter corsFilter;
-    private final SecurityProblemSupport problemSupport;
+  public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
+    this.tokenProvider = tokenProvider;
+    this.corsFilter = corsFilter;
+    this.problemSupport = problemSupport;
+  }
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public RoleHierarchy roleHierarchy() {
+    RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+    roleHierarchy.setHierarchy("ROLE_TEACHER > ROLE_USER " + "ROLE_STUDENT > ROLE_USER");
+    return roleHierarchy;
+  }
 
-    @Bean
-    public RoleHierarchy roleHierarchy() {
-        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy(
-            "ROLE_TEACHER > ROLE_USER " +
-            "ROLE_STUDENT > ROLE_USER"
-        );
-        return roleHierarchy;
-    }
+  @Override
+  public void configure(WebSecurity web) {
+    web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**").antMatchers("/swagger-ui/index.html").antMatchers("/test/**");
+  }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**");
-    }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    // @formatter:off
         http
             .csrf()
             .disable()
@@ -95,14 +87,38 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/login").permitAll()
+            .antMatchers("/register").permitAll()
+            .antMatchers("/schools").authenticated()
+            .antMatchers("/classrooms").authenticated()
+            .antMatchers("/subjects").authenticated()
+            .antMatchers("/students").authenticated()
+            .antMatchers("/mark").authenticated()
         .and()
             .httpBasic()
         .and()
             .apply(securityConfigurerAdapter());
-        // @formatter:on
-    }
+        http.authorizeRequests()
+        .and()
+            .formLogin()//
+            .usernameParameter("username")//
+            .passwordParameter("password")
+            .loginProcessingUrl("/j_spring_security_login")//
+            .loginPage("/login")//
+            .defaultSuccessUrl("/")//
+            .failureUrl("/login?message=error")//
+        // config for Logout Page.
+        .and()
+            .logout().deleteCookies("JSESSIONID")
+            .logoutUrl("/j_spring_security_logout")
+            .logoutSuccessUrl("/");
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
-    }
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+    // @formatter:on
+  }
+
+  private JWTConfigurer securityConfigurerAdapter() {
+    return new JWTConfigurer(tokenProvider);
+  }
 }
